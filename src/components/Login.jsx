@@ -1,24 +1,35 @@
-import React from 'react'
-import { useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
+  const [emailId, setEmailId] = useState("shikhar@gupta.com");
+  const [password, setPassword] = useState("Shikhar@123");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const[emailId, setEmailId] = useState("");
-    const[password, setPassword] = useState(""); 
-
-    const handleLogin = async () => {
-        try{
-            const res = await axios.post("http://localhost:3000/login", {
-                emailId, password,
-            },
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/login",
         {
-            withCredentials: true, //whitelist the server
-        });
-        } catch(err){
-            console.error(err);
+          emailId,
+          password,
+        },
+        {
+          withCredentials: true, //whitelist the server
+        }
+      );
+      dispatch(addUser(res.data));
+      return navigate("/");
+    } catch (err) {
+      console.error(err);
     }
-}
+  };
 
   return (
     <div className="flex justify-center my-10">
@@ -52,12 +63,14 @@ const Login = () => {
             </label>
           </div>
           <div className="card-actions justify-center m-2 ">
-            <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+            <button className="btn btn-primary" onClick={handleLogin}>
+              Login
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;
