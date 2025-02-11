@@ -106,8 +106,8 @@ const EditProfile = ({ user }) => {
                     <option value="" disabled>
                       Select Gender
                     </option>
-                    <option value="male">male</option>
-                    <option value="female">female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                   </select>
                 </label>
 
