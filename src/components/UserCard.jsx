@@ -5,7 +5,8 @@ import { removeUserFromFeed } from "../utils/feedSlice";
 
 const UserCard = ({ user }) => {
   const { _id, firstName, lastName, photoUrl, age, gender, about } = user;
-
+  const dispatch = useDispatch();
+  
   const handleSendRequest = async (status, userId) => {
     try {
       const res = axios.post(
@@ -13,6 +14,7 @@ const UserCard = ({ user }) => {
         {},
         { withCredentials: true }
       );
+      dispatch(removeUserFromFeed(userId));
     } catch (error) {
       console.error(error);
     }
